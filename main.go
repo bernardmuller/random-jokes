@@ -36,7 +36,11 @@ func main() {
 
 	var data_json StringList
 	json.Unmarshal(data_file_content, &data_json)
-	fmt.Printf("%T: %v \n", data_json, data_json)
+	fmt.Printf("%T: %v \n", data_json[1], data_json[1])
+
+	router.GET("/", func(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
+		w.Write([]byte(data_json[1]))
+	})
 
 	port := getPort("8080")
 	log.Fatal(http.ListenAndServe("0.0.0.0"+port, router))
